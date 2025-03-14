@@ -1,0 +1,50 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Hardhat-specific files
+artifacts/
+cache/
+coverage/
+coverage.json
+
+# Compiled files
+dist/
+*.out
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test reports
+report.xml
+test-results/
+
+# Gas reports (if enabled in Hardhat)
+gas-report.txt
+
+# Lock files (optional, depending on your preference)
+package-lock.json
+yarn.lock
+
+# Local Hardhat network data (if you use persistent storage)
+db/
