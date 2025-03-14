@@ -18,7 +18,7 @@ Follow these steps to set up the project locally:
    cd carbon-credit-decentralized-exchange
    ```
 2. **Install dependencies**
-    '''bash
+    ```bash
     npm install
     ```
 3. **Compile**
