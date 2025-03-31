@@ -35,3 +35,7 @@ Follow these steps to set up the project locally:
     ```bash
     npx hardhat test
     ```
+
+
+### PREREQUISITES ARSH ###
+npm install @openzeppelin/contracts
