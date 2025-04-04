@@ -18,6 +18,11 @@ contract Projects {
     mapping(uint256 => project) public projectsUnlisted;
     mapping(uint256 => project) public projectsListed;
 
+    // Emiters
+    event Created(project);
+    event Listed(project);
+    event Unlisted(project);
+
     /**
      * @dev Function that adds a new project to the contract
      * @param name of the project
@@ -39,8 +44,10 @@ contract Projects {
             address(0) // null value
         );
         
+        emit Created(newProject);
         uint256 added_id = current_id++;
         projectsUnlisted[added_id] = newProject; // Save to state variable
+
         return added_id;   // Return new dice ID
     }
 
@@ -52,6 +59,7 @@ contract Projects {
         project memory toBeListed = projectsUnlisted[projectID];
         delete(projectsUnlisted[projectID]);
 
+        emit Listed(toBeListed);
         toBeListed.state = projectState.listed;
         projectsListed[projectID] = toBeListed;
     }
@@ -64,6 +72,7 @@ contract Projects {
         project memory toBeUnlisted = projectsListed[projectID];
         delete(projectsListed[projectID]);
 
+        emit Unlisted(toBeUnlisted);
         toBeUnlisted.state = projectState.unlisted;
         projectsUnlisted[projectID] = toBeUnlisted;
     }
