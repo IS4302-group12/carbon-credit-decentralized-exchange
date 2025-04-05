@@ -24,13 +24,13 @@ contract Projects {
     event Unlisted(project);
 
     /**
-     * @dev Function that adds a new project to the contract
+     * @dev Function that creates a new project
      * @param name of the project
      * @param description of the project
      * @param savedCO2 of the current project
      * @return uin256 id of the project added
      */
-    function add(string memory name, string memory description, uint256 savedCO2) payable public returns (uint256) {
+    function create(string memory name, string memory description, uint256 savedCO2) payable public returns (uint256) {
         require(msg.value >= 0.01 ether, "At least 0.01 ETH is required to create a project");
         
         // Create a new project object

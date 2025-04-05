@@ -28,7 +28,7 @@ describe("Test the Projects functionality", function () {
     const savedCO2 = 2;
     const req1 = await projects
       .connect(player1)
-      .add(name, description, savedCO2, { value: ethers.parseEther("0.1") });
+      .create(name, description, savedCO2, { value: ethers.parseEther("0.1") });
     await req1.wait();
 
     let [
