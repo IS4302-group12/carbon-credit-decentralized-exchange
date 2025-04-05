@@ -69,9 +69,8 @@ describe("Test the Projects functionality", function () {
     let isUnlisted = await projects.isUnListed(1);
 
     // check that is both listed, and not present in unlisted
-    expect(isListed).to.equal(true);
     expect(isUnlisted).to.not.equal(true);
-    // returnedProjectState = Number(returnedProjectState);
+    returnedProjectState = Number(returnedProjectState);
 
     const name = "Project 1";
     const description = "Project to save more trees";

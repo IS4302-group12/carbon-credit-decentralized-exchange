@@ -41,7 +41,7 @@ contract Projects {
             current_id,
             projectState.unlisted,
             msg.sender,
-            address(0) // null value
+            address(0) // null address
         );
         
         emit Created(newProject);
@@ -57,11 +57,13 @@ contract Projects {
      */
     function list(uint256 projectID) public ownerOnly(projectID) validProjectId(projectID) projectIsUnlisted(projectID) {
         project memory toBeListed = projectsUnlisted[projectID];
-        delete(projectsUnlisted[projectID]);
+        require(msg.sender == toBeListed.owner, "Not the owner, action not permitted");
 
         emit Listed(toBeListed);
         toBeListed.state = projectState.listed;
         projectsListed[projectID] = toBeListed;
+
+        delete(projectsUnlisted[projectID]);
     }
 
     /**
@@ -70,11 +72,12 @@ contract Projects {
      */
     function unlist(uint256 projectID) public ownerOnly(projectID) validProjectId(projectID) projectIsListed(projectID) {
         project memory toBeUnlisted = projectsListed[projectID];
-        delete(projectsListed[projectID]);
 
         emit Unlisted(toBeUnlisted);
         toBeUnlisted.state = projectState.unlisted;
         projectsUnlisted[projectID] = toBeUnlisted;
+
+        delete(projectsListed[projectID]);
     }
 
 
