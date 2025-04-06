@@ -11,6 +11,7 @@ contract ProjectToken is ERC721URIStorage {
     mapping(uint256 => bool) public verified;
     
     struct NFTDetails {
+        uint256 projectId;
         string projectName;
         address projectOwner;
         address auditor;
@@ -46,7 +47,8 @@ contract ProjectToken is ERC721URIStorage {
         string memory location,
         uint256 issuanceDate,
         uint256 expirationDate,
-        string memory reductionMethod
+        string memory reductionMethod,
+        uint256 projectId
     ) external onlyAuditor returns (uint256) {
         require(projectOwner != address(0), "Invalid project owner address");
 
@@ -63,7 +65,8 @@ contract ProjectToken is ERC721URIStorage {
             issuanceDate: issuanceDate,
             expirationDate: expirationDate,
             reductionMethod: reductionMethod,
-            verificationDate: block.timestamp // Set to the current timestamp
+            verificationDate: block.timestamp, // Set to the current timestamp
+            projectId: projectId
         });
         
         verified[tokenId] = true;
