@@ -6,9 +6,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./ProjectNFT.sol";
+import "./Marketplace.sol";
 
 contract CarbonCreditToken is ERC20 {
     address public auditor; // Address of the assigned auditor
+    address public marketplace;
     ProjectToken public greenNFT; // Reference to the Green NFT contract
 
     struct CreditInfo {
@@ -24,10 +26,11 @@ contract CarbonCreditToken is ERC20 {
     event ReductionMethodSet(address indexed projectOwner, string method);
 
     // Constructor initializes the token, assigns the auditor, and sets the Green NFT contract address
-    constructor(address _auditor, address _greenNFT) ERC20("CarbonCredit", "CCT") {
+    constructor(address _auditor, address _greenNFT, address _marketplace) ERC20("CarbonCredit", "CCT") {
         require(_auditor != address(0), "Invalid auditor address");
         require(_greenNFT != address(0), "Invalid NFT contract address");
         auditor = _auditor;
+        marketplace = _marketplace;
         greenNFT = ProjectToken(_greenNFT);
     }
 
@@ -45,6 +48,7 @@ contract CarbonCreditToken is ERC20 {
         
         creditExpiry[projectOwner] = CreditInfo(amount, expiry);
         _mint(projectOwner, amount);
+        _approve(projectOwner, address(marketplace), amount);
         emit CarbonCreditsIssued(projectOwner, amount, expiry);
     }
 
