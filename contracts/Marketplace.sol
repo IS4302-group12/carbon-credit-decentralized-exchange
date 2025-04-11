@@ -8,7 +8,7 @@ import "./LiquidityProviderToken.sol";
 contract Marketplace is Ownable {
     IERC20 public ccToken; // Carbon Credit Token (CCT)
     LiquidityProviderToken public lpToken; // Liquidity Provider Token
-    uint256 public constant EXCHANGE_RATE = 1; // 1 CCT = 1 MATIC (static pricing)
+    uint256 public constant EXCHANGE_RATE = 1000000000000000000; // 1 CCT = 1 MATIC (static pricing)
     uint256 public constant FEE_PERCENTAGE = 50; // 0.5% fee (50 / 10000)
     uint256 public constant FEE_DENOMINATOR = 10000;
 
@@ -20,6 +20,7 @@ contract Marketplace is Ownable {
     event TokensBought(address indexed buyer, uint256 cctAmount, uint256 maticAmount);
     event LiquidityAdded(address indexed provider, uint256 maticAmount, uint256 lpTokens);
     event LiquidityWithdrawn(address indexed provider, uint256 maticAmount, uint256 lpTokens);
+    event Paying(uint256 amount);
 
     constructor(address _ccToken) Ownable(msg.sender) {
         require(_ccToken != address(0), "Invalid CCT token address");
@@ -65,6 +66,7 @@ contract Marketplace is Ownable {
     function buyCCT(uint256 cctAmount) external payable {
         require(cctAmount > 0, "Amount must be greater than 0");
         uint256 maticAmount = cctAmount * EXCHANGE_RATE;
+        emit Paying(msg.value);
         require(msg.value >= maticAmount, "Insufficient MATIC sent");
         uint256 cctBalance = ccToken.balanceOf(address(this));
         require(cctBalance >= cctAmount, "Insufficient CCT liquidity");
